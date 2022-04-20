@@ -1,5 +1,5 @@
-num=float(input("enter the number :"))
-n=int(input("enter the power :"))
+num=float(input("enter the number x :"))
+n=int(input("enter the power n :"))
 
 class Power_number:
   
