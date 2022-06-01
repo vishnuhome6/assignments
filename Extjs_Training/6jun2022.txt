@@ -1,0 +1,88 @@
+Ext.define('EAM.custom.external_wsjobs', {
+    extend: 'EAM.custom.AbstractExtensibleFramework',
+    getSelectors: function () {
+    var me = this;
+    return {
+    
+    
+    
+    '[extensibleFramework] [tabName=HDR]': {
+    beforesaverecord: function () {
+        var vFormPanel = this.getFormPanel();
+        var vFieldsArray, vFieldsObj = {};
+        var v_eqp = vFormPanel.getFldValue('workorderstatus');
+        
+        if (v_eqp == 'C'){
+          
+            vFieldsObj['priority'] = 'required';  
+            EAM.Builder.setFieldState(vFieldsObj, vFormPanel.getForm().getFieldsAndButtons());  
+       }
+      
+       if (v_eqp == 'R'){
+          
+            vFieldsObj['woclass'] = 'required';
+            EAM.Builder.setFieldState(vFieldsObj, vFormPanel.getForm().getFieldsAndButtons());
+        
+        }
+     
+     
+    console.log('afterloaddata');
+    console.log('beforesaverecord');
+    },
+    afterloaddata: function () {
+    console.log('afterloaddata');
+    },
+    
+    
+    
+    afterrender: function () {
+    console.log('afterloaddata');
+    },
+    
+    
+    
+    aftersaverecord: function () {
+    
+    console.log('aftersaverecord');
+    }
+    }
+    
+    
+    
+    ,'[extensibleFramework] [tabName=HDR] [name=equipment]': {
+    
+    customonblur: function(field, lastValues) {
+        var vFormPanel = this.getFormPanel();
+        var vFieldsArray, vFieldsObj = {};
+        var v_eqp = vFormPanel.getFldValue('equipmentdesc');
+        vFormPanel.setFldValue('udfchar01',v_eqp);
+    } 
+}   
+
+     ,'[extensibleFramework] [tabName=HDR] [name=location]': {
+        customonblur: function(field, lastValues) {
+            var vFormPanel = this.getFormPanel();
+            var vFieldsArray, vFieldsObj = {};
+            var v_loc = vFormPanel.getFldValue('location');
+            if (v_loc != null){
+                var vFormPanel = this.getFormPanel();
+                vFormPanel.setFldValue("safety", "-1", false);
+                vFormPanel.setFldValue("warranty", "-1", false);  
+            }
+        }
+
+    },//console.log('customonblur');
+    '[extensibleFramework] [tabName=HDR] [name=workordertype]': {
+    
+    
+    
+    select: function (field, lastValues) {
+    console.log('select');
+    
+    
+    
+    },
+    }
+    }
+    }
+    });//# sourceURL=external_wsjobs.js
